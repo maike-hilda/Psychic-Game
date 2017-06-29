@@ -1,3 +1,8 @@
+//Maike Scherer
+//Homework 3
+//Issues: var userGuess = event.key gives feedback Uncaught ReferenceError: userGuess is not defined
+//    at <anonymous>:1:1 --> the win statement will never become true
+
 var wins = 0;
 var losses = 0;
 var guessNumber = 9;
