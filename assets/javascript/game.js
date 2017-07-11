@@ -1,8 +1,7 @@
 //Maike Scherer
 //Homework 3
 //Issues: var userGuess = event.key gives feedback Uncaught ReferenceError: userGuess is not defined
-//    at <anonymous>:1:1 --> the win statement will never become true
-
+// at <anonymous>:1:1 --> the win statement will never become true
 var wins = 0;
 var losses = 0;
 var guessNumber = 9;
@@ -32,13 +31,18 @@ console.log("userGuess: " + userGuess)
 
 if (guessNumber > 0) {
 
+    console.log("userguess: " + userGuess);
+    console.log("computerguess: " + computerGuess);
+    console.log(userGuess === computerGuess);
+    
+
     if (userGuess === computerGuess) {
         wins++;
         guessNumber = 0;
         console.log(wins);
         console.log("You Win!");
         alert("You Win!");
-        var computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
+        computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
         console.log("computerGuess: " + computerGuess);
         guesses = "";
     }
@@ -61,7 +65,7 @@ if (guessNumber > 0) {
 if (guessNumber === 0) {
         losses++;
         guessNumber = 9;
-        var computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
+        computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
         console.log("computerGuess: " + computerGuess);
         guesses = "";
         alert("You Lose! Try again!");
