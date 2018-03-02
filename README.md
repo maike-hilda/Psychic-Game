@@ -6,3 +6,4 @@ This game is programmed in JavaScript. The user interface is styled with bootswa
 To play this game, go to <a href="https://maike-hilda.github.io/Psychic-Game">https://maike-hilda.github.io/Psychic-Game</a>.
 
 ![alt text](https://github.com/maike-hilda/Psychic-Game/blob/master/userInterface.PNG)
+
