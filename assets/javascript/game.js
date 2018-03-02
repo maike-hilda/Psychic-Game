@@ -1,57 +1,104 @@
-//Maike Scherer
-//Homework 3
+// A game in javascript where the user guesses a letter to win or lose against the computer
 
-var wins = 0;
-var losses = 0;
-var guessNumber = 9;
-var computerChoices = ["a","b","c","d","e","f","g","h","j", "i", "k","l","m","n","o","p","q","r","s","t",
-    "u","v","x","y","z"];
-var guesses = "";
-
-// randomly chooses letter
-var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-console.log("computerGuess: " + computerGuess);
-
-document.onkeyup = function (event) {
-    // determine pressed key
-    var userGuess = event.key;
-
-    console.log("userGuess: " + userGuess);
-    if (guessNumber > 0) {
-
-    console.log("userguess: " + userGuess);
-    console.log("computerguess: " + computerGuess);
-    console.log(userGuess === computerGuess);
-
-        if (userGuess === computerGuess) {
-            wins++;
-            guessNumber = 0;
-            console.log(wins);
-            console.log("You Win!");
-            alert("You Win!");
-            computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
-            console.log("computerGuess: " + computerGuess);
-            guesses = "";
-        } else {
-            guesses += userGuess;
-            console.log("keep guessing");
-            console.log("guessNumber:" + guessNumber);
-            console.log(guesses);
-            document.getElementById("guessDone").innerHTML = ("Your guesses so far: " + guesses);
-            guessNumber--;
+var game = {
+    // set up required variables
+    alphabet: ["A","B","C","D","E","F","G","H","J", "I", "K","L","M","N","O","P","Q","R","S","R",
+        "U","V", "W", "X","Y","Z"],
+    wins: 0,
+    losses: 0,
+    won: false,
+    guesses: [],
+    // computerGuess: "",
+    update: "Type a letter to get started!",
+    // playGame runs while the user has had 9 guesses or less 
+    // adds to wins or losses if user wins / loses
+    playGame: function(userGuess) {
+        // allow user to guess 9 times
+        if (this.guesses.length < 9) {
+            if (userGuess === this.computerGuess) {
+                this.wins++;
+                this.update = "You win. Press Play Again for another round!";
+                this.won = true;
+            } else {
+                this.update = "Keep Guessing!";
+            }
         }
-            
-        document.getElementById("wins").innerHTML = ("Wins: " + wins);
-        document.getElementById("losses").innerHTML = ("Losses: " + losses);
-        document.getElementById("guessNumber").innerHTML = ("Guesses left: " + guessNumber); 
-    }
+        // add guessed letter to array
+        this.guesses.push(userGuess);
+        if (this.guesses.length == 9) {
+            this.update = "You have used all available guesses! The correct answer was <bold>" + 
+            this.computerGuess + "</bold> . Press Play Again for another round!";
+            this.losses++;
+        }
+        this.updateHTML();
+    },
+    //generate a random letter
+    computerGuessGenerator: function() {
+        this.computerGuess = this.alphabet[Math.floor(Math.random() * this.alphabet.length)];
+        // console.log("computerGuess", this.computerGuess);
+    },
+    // display updated info to html
+    updateHTML: function() {
+        var progress = this.guesses.length / 9 * 100;
+        document.getElementById("wins").innerHTML = ("Wins: " + this.wins);
+        document.getElementById("losses").innerHTML = ("Losses: " + this.losses);
+        document.getElementById("number-of-guesses").innerHTML = ("You have made " + this.guesses.length + 
+            " out of 9 guesses."); 
+        document.getElementById("guesses").innerHTML = ("Guessed Letters so far: " + this.guesses);
+        document.getElementById("progress").innerHTML = '<div class="progress"><div class="progress-bar"' +
+        'role="progressbar" style="width:' + progress + '%;" aria-valuenow="25"' +
+        'aria-valuemin="0" aria-valuemax="100"></div></div>'; 
+        document.getElementById("updates").innerHTML = this.update;
+    },
+    // new round same player, no reset of wins / losses
+    newRound: function() {
+        this.won = false;
+        this.guesses = [];
+        this.update = "Type a letter to get started!";
+        this.computerGuessGenerator();
+        this.updateHTML();
+    },
+    // reset all variables
+    reset: function() {
+        this.wins = 0;
+        this.losses = 0;
+        this.newRound();
+    },
+};   
 
-    if (guessNumber === 0) {
-        losses++;
-        guessNumber = 9;
-        computerGuess = computerChoices[Math.ceil(Math.random() * computerChoices.length)];
-        console.log("computerGuess: " + computerGuess);
-        guesses = "";
-        alert("You Lose! Try again!");
-    }
+// set up before user activity
+game.computerGuessGenerator();
+game.updateHTML();
+
+// catches user input via keys
+document.onkeyup = function (event) {
+    // determine pressed key, comes in format "KeyA"
+    var userGuess = event.code;
+    // input other than letters will be undefined
+    userGuess = userGuess.split("Key")[1];
+    console.log("userGuess", userGuess);
+
+    // checks if valid input and still valid to play (not won, not too many guesses)
+    if (game.guesses.length < 9 && game.won == false) {
+        if (userGuess && !game.guesses.includes(userGuess)) {
+            game.playGame(userGuess);
+        } else if (userGuess === undefined) {
+            game.update = "Invalid Input. Letters Only.";
+            game.updateHTML();
+        } else if (game.guesses.includes(userGuess)) {
+            game.update = "Invalid Input. You already used the letter " + userGuess + ".";
+            game.updateHTML(); 
+        }
+    }  
+};
+
+// reset button
+document.getElementById("reset-btn").onclick = function() {
+    document.getElementById("updates").parentNode.style.visibility = "visible";
+    game.reset();
+};
+
+// play again button
+document.getElementById("play-again-btn").onclick = function() {
+    game.newRound();
 };

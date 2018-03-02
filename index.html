@@ -6,19 +6,51 @@ Homework 3 -->
 <head>
 	<title>Psychic Game</title>
 	
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/superhero/bootstrap.css"
+>
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<script type="text/javascript" src="assets/javascript/game.js"></script>
+
 </head>
 <body>
 
-	
-	<h1>The Psychic Game</h1>
-	<p>Guess what letter I'm thinking of</p>
-	<div id="wins"></div>
-	<div id="losses"></div>
-	<div id="guessNumber"></div>
-	<div id="guessDone"></div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="http://www.maikescherer.com">Main Page</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+
+<div class="jumbotron">
+	<h1 class="display-3">Welcome to the Psychic Game</h1>
+	<p class="lead">Guess what letter I'm thinking of.</p>
+	<hr class="my-4">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<p id="wins"></p>
+				<p id="losses"></p>
+				<p id="number-of-guesses"></p>
+				<p id="guesses"></p>
+				<button type="button" class="btn btn-primary" id="play-again-btn">Play Again</button>
+				<button type="button" class="btn btn-primary" id="reset-btn">Reset</button>
+				<br/><br/>
+			</div>
+			<div class="col-md-4">
+				<p id="updates" class="alert alert-primary lead"></p>
+			</div>
+		</div>
+	</div>
+	<p id="progress"></p>
+</div>
+		
+		
+
+
+<!-- Scripts -->
+<!-- Sweet alert CDN -->
+<script type="text/javascript" src="assets/javascript/game.js"></script>
 
 </body>
 </html>
