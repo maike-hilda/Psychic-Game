@@ -1,5 +1,7 @@
 // A game in javascript where the user guesses a letter to win or lose against the computer
 
+"use strict";
+
 var game = {
     // set up required variables
     alphabet: ["A","B","C","D","E","F","G","H","J", "I", "K","L","M","N","O","P","Q","R","S","R",
